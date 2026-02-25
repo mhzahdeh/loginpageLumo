@@ -32,6 +32,7 @@ brew install watchman
    npm install
   ```
    *Installs project dependencies (Node modules).*
+
 2. **Start the app**
   ```bash
    npx expo start
