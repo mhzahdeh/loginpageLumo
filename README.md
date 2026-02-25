@@ -136,6 +136,33 @@ You can either run the app in the **iOS Simulator** (in Xcode) or on a **physica
 
 ---
 
+## Additional notes
+
+### How React Native and Expo work
+
+Your app logic and UI are written in **JavaScript or TypeScript** (React components). That code is **not** converted to Swift or Objective-C. Instead, it runs as JavaScript inside the app at runtime.
+
+The iOS app you build is a **native binary** (the “shell”) that includes:
+
+- A **JavaScript engine** — on iOS, React Native uses **Hermes**, which executes your JS bundle.
+- The **React Native native layer** — C++, Objective-C++, and Swift code that implements the framework. When your React tree says “render a View” or “show this text”, React Native’s native code creates and updates real iOS views (`UIView`, `UILabel`, etc.) and handles touch, layout, and native APIs. Communication between JavaScript and this native layer goes through the **bridge** (or, in the new architecture, **JSI** — JavaScript Interface).
+
+So: your code stays JavaScript; the native app is a host that runs that JavaScript and turns your React description into real native UI and behavior.
+
+**Expo** adds tooling (CLI, config, dev server) and a set of **native modules** (camera, sensors, etc.) that are already wired into the native project. When you run Expo commands, Expo uses the same React Native native layer and builds the same kind of native shell, with Expo’s modules and config applied.
+
+### What gets compiled
+
+- **JavaScript side:** **Metro** (the bundler) takes your source files, resolves `import`s, and produces a **JavaScript bundle**. That bundle is not compiled to machine code; it is loaded and executed at runtime by Hermes. In development, the bundle is served by the dev server; in a production build, it can be embedded in the app or loaded from a server.
+
+- **Native side:** The `ios/` project contains the React Native framework, Hermes, and your app’s native shell (and any native modules). **Xcode** compiles this:
+  - **clang** compiles C, C++, and Objective-C/C++.
+  - The **Swift compiler** (`swiftc`) compiles Swift.
+
+  The result is native **machine code** (ARM for a physical device, or x86_64/arm64 for the simulator) packaged as the `.app`. When you launch the app, that native binary starts Hermes, loads your JavaScript bundle, and React Native’s native layer renders the UI and handles events according to what your JS code describes.
+
+---
+
 ## Useful links
 
 - [Create an Expo project](https://docs.expo.dev/get-started/create-a-project/)
