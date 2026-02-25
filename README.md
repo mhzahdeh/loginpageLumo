@@ -66,13 +66,25 @@ You can either run the app in the **iOS Simulator** (in Xcode) or on a **physica
   Install from the [Mac App Store](https://apps.apple.com/us/app/xcode/id497799835) (or update if you already have it).
 2. **Install Xcode Command Line Tools**
   Open Xcode → **Settings…** (or ⌘ + ,) → **Locations** → choose the latest version in the **Command Line Tools** dropdown.
-3. **Install iOS platform support in Xcode**
-  In Xcode, go to **Settings…** → **Components**. Under **Platform Support**, ensure **iOS** is installed (you should see a version number and size, e.g. "Last used …", not a "Get" button). If you see **Get** next to iOS, click it to download and install the iOS platform.
-   Xcode Settings → Components: ensure iOS is installed under Platform Support
-4. **Run the app in the simulator**
-  From the project root:
-   *Builds the app and launches it in the default iOS Simulator.*
-   Expo will start the dev server (the local server that serves your JavaScript bundle so you can see code changes with fast refresh without rebuilding the native app) and open the simulator. You can pick a different simulator when prompted if needed.
+3. **Install iOS platform support in Xcode**  
+   In Xcode, go to **Settings…** → **Components**. Under **Platform Support**, ensure **iOS** is installed (you should see a version number and size, e.g. "Last used …", not a "Get" button). If you see **Get** next to iOS, click it to download and install the iOS platform.
+
+   ![Xcode Settings → Components: ensure iOS is installed under Platform Support](docs/xcode-ios-components.png)
+
+4. **Run the app in the simulator (terminal)**  
+   Open the terminal, go to the project root (`ios-app-lumosfit`), then run **one** of these:
+
+   **Option A — Start dev server, then choose iOS:**
+   ```bash
+   npx expo start
+   ```
+   That starts the Expo dev server (serves your JavaScript so you get fast refresh). When the dev server is running, the terminal shows a QR code and a menu. Press **`i`** to open the **iOS Simulator**. Expo will launch the simulator and load the app. (You can press `i` again later to reopen the simulator from the same terminal.)
+
+   **Option B — Build and launch in one step:**
+   ```bash
+   npx expo run:ios
+   ```
+   That builds the native iOS app and launches it in the default iOS Simulator. If you have more than one simulator, the terminal may ask you to pick one—use the arrow keys to choose, then press Enter. The dev server starts and the simulator opens with the app.
 
 ---
 
@@ -85,19 +97,28 @@ You can either run the app in the **iOS Simulator** (in Xcode) or on a **physica
   - On the iPhone: **Settings** → **Privacy & Security** → **Developer Mode**.
   - Turn **Developer Mode** **On**.
   - Confirm the restart when prompted; after the device restarts, confirm again and enter your passcode if asked.
-4. **Set a unique bundle identifier** 
-   **If you forked this repo:** Use a bundle identifier that *you* will register with your own Apple Developer account (e.g. `com.forkername.lumosfit`). The bundle ID is tied to a specific Apple Developer account and that account's provisioning profiles. To run on a physical device, the app must be signed with a profile that matches that bundle ID and is created by your account. If you keep the original author's bundle ID, only their account can create valid profiles—you'll get errors like "No profiles for 'com.yourname.lumosfit' were found." Set `expo.ios.bundleIdentifier` in `app.json` to something you'll register (e.g. `com.forkername.lumosfit`), then use your Apple Developer account to register that bundle ID and create the provisioning profile.
-5. **Build and run on your device**
-  From the project root:
-   *Builds the app and lists connected devices; choose your iPhone to install and run.*
-   Select your iPhone from the list when prompted. The app will build and install on your phone.
+4. **Set a unique bundle identifier (first time only)**  
+   In the project root, open `app.json` and set `expo.ios.bundleIdentifier` to a value unique to you (e.g. `com.yourname.lumosfit`). Xcode uses this to create a provisioning profile so the app can be signed and run on your device.
+
+   **If you forked this repo:** Use a bundle ID that *you* will register with your own Apple Developer account (e.g. `com.forkername.lumosfit`). The bundle ID is tied to a specific Apple Developer account. If you keep the original author's bundle ID, only their account can create valid profiles—you'll get errors like "No profiles for 'com.yourname.lumosfit' were found." Set `expo.ios.bundleIdentifier` in `app.json` to something you'll register, then use your Apple Developer account to register that bundle ID and create the provisioning profile.
+
+5. **Build and run on your device (terminal)**  
+   Open the terminal and go to the project root. Run:
+
+   ```bash
+   npx expo run:ios --device
+   ```
+
+   That command builds the app and lists your connected iOS devices.  
+
+   When prompted, **select your iPhone** from the list (use the arrow keys, then press Enter). Expo will build the app, install it on your phone, and start the dev server. Keep the terminal open so the app can connect to the dev server for fast refresh.
 6. **If your iPhone shows "Untrusted Developer"**
   After the app is installed, iOS may block it until you trust your developer certificate:
   - On the iPhone: **Settings** → **VPN & Device Management** (or **General** → **VPN & Device Management** on some versions).
   - Under **Developer App**, tap your developer profile and choose **Allow** (or **Trust "…"**).
    You only need to do this once per device/profile.
-7. **Open the app and connect to the dev server**
-  Find the LumosFit app in your iPhone's home screen or App Library and open it. To load your project from the dev server (so you get fast refresh and the latest code), the app needs to connect to the URL where the dev server is running. You can either **scan the QR code** shown in the terminal (with your iPhone camera or from inside the app if it offers a scanner), or **enter the dev server URL** from the terminal (e.g. `exp://192.168.x.x:8081`) into the app when it asks for a URL. Once connected, the app will load your JavaScript bundle from your Mac.
+7. **Open the app and connect to the dev server**  
+   On your iPhone, find the LumosFit app in the home screen or App Library and open it. To load your project from the dev server (for fast refresh and the latest code), the app needs the dev server URL. In the **same terminal** where you ran `npx expo run:ios --device`, a QR code and a URL (e.g. `exp://192.168.x.x:8081`) are shown. Either **scan that QR code** with your iPhone camera (or from inside the app if it has a scanner), or **type the URL** into the app when it asks for a development server URL. Once connected, the app loads your JavaScript from your Mac.
 
 ---
 
