@@ -53,6 +53,8 @@ brew install watchman
 - **macOS** with **Xcode** (for iOS simulator or device)
 - **Git** (to clone the repo)
 
+**Note:** The iOS setup and troubleshooting steps in this README are written for **macOS** (required for building and running the app on the iOS Simulator or a physical iPhone).
+
 ---
 
 ## Two ways to run the app for testing
@@ -90,6 +92,8 @@ You can either run the app in the **iOS Simulator** (in Xcode) or on a **physica
 ---
 
 ### Option 2: Physical iPhone (device)
+
+To run the app on a physical iPhone you need extra setup in Xcode: **sign in with your Apple ID**, add your account in Xcode, and let Xcode create a **development certificate** and provisioning profile. If the terminal build fails with a signing error, **build once from Xcode** with your device selected—that often generates the profile so `npx expo run:ios --device` works afterward.
 
 1. **Complete Option 1 steps 1–3** (Xcode and iOS platform support must be installed).
 2. **Connect your iPhone**
@@ -134,6 +138,32 @@ You can either run the app in the **iOS Simulator** (in Xcode) or on a **physica
 | `npx expo run:ios --device`        | Build and run on a connected iPhone (choose device when prompted).                                                                     |
 | `npx expo start`                   | Start the Expo dev server only (serves your JS bundle for fast refresh and debugging; then press `i` for iOS simulator if configured). |
 
+
+---
+
+## Troubleshooting (macOS / physical device)
+
+These issues commonly appear when building or running on a **physical iPhone** on macOS. Fixes assume you are using Xcode on a Mac.
+
+**1. "Xcode must be fully installed"**  
+Xcode or Command Line Tools are not fully set up. Install Command Line Tools: open Xcode → **Settings…** (⌘,) → **Locations** → set **Command Line Tools** to the latest version. Open Xcode once and let it complete any first-run setup.
+
+**2. "No code signing certificates available"**  
+There is no Apple Development certificate for your account. First add your Apple ID: Xcode → **Settings…** → **Accounts** → **+** → **Apple ID** → sign in. Then set up signing for this app: in Xcode's **left sidebar** (Project Navigator), click the **blue project icon** at the top (the one with the app name). In the main area you'll see **TARGETS**; click the **app target** (e.g. the name of the app, often under the project). With the app target selected, open the **Signing & Capabilities** tab in the main editor. Turn on **Automatically manage signing** and choose your **Team** in the dropdown (for a free Apple ID this is usually **Personal team**). Xcode will create the development certificate.
+
+**3. Bundle identifier not available (or "already in use")**  
+Explanation: that bundle ID is already registered to another Apple Developer account or app. To fix it: go to the **ios** folder in your project and double-click the **.xcworkspace** file to open the project in Xcode (that’s how you get to the targets). In Xcode’s left sidebar (Project Navigator), click the **blue project icon** at the top. In the main area under **TARGETS**, click the **app target**. Open the **Signing & Capabilities** tab and change **Bundle Identifier** to something unique (e.g. `com.yourname.lumosfit`). Also set the same value in `app.json` as `expo.ios.bundleIdentifier`.
+
+**4. "Your team has no devices…"**  
+Your iPhone is not registered as a development device for your team. On the iPhone, enable **Developer Mode** (Settings → Privacy & Security → Developer Mode) and, when you connect the cable, tap **Trust** on the device. Reconnect the device to your Mac; Xcode should register it and you can create a provisioning profile.
+
+**5. Expo build failed (e.g. Error 65 / "No profiles for …" / no signing profile)**  
+The Expo CLI could not create or use a signing profile. Open the project in Xcode (open the `ios` folder and double-click the `.xcworkspace` file). In the top toolbar, choose your **physical device** (your iPhone by name) as the run destination—not a simulator. Then run from Xcode (**Product** → **Run** or ⌘R). That creates the profile; afterward `npx expo run:ios --device` will usually work.
+
+**6. App didn't show up on the phone**  
+The build targeted a simulator instead of your device. In Xcode, use the run-destination dropdown in the top toolbar and select your **actual device** (your iPhone by name), then run again. When using the terminal with `npx expo run:ios --device`, pick your phone from the list, not a simulator.
+
+If you run into other bugs or errors, try searching the exact message online or describing the issue to an AI assistant (e.g. ChatGPT or another LLM) to help debug.
 
 ---
 
