@@ -2,6 +2,9 @@
 
 This app is built with **React Native** and **Expo**. React Native lets you build native iOS (and Android) apps using JavaScript and React. Expo is a framework and toolchain that simplifies setting up, building, and running React Native projects.
 
+## Claude Code on VS Code / Cursor setup instructions
+[Claude Code on VS Code / Cursor setup instructions](https://code.claude.com/docs/en/vs-code)
+
 ---
 
 ## First-time setup
