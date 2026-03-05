@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: "#fff",
+    backgroundColor: "#f3f4f6",
   },
 
   header: {
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     borderRadius: 50,
-    backgroundColor: "#5da95d",
+    backgroundColor: "#5FA920",
     alignItems: "center",
     justifyContent: "center",
     alignSelf: "center",
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
   },
 
   card: {
-    backgroundColor: "#f3f4f6",
+    backgroundColor: "#fff",
     borderRadius: 12,
     padding: 16,
   },
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
   },
 
   edit: {
-    color: "#22a55a",
+    color: "#5FA920",
   },
 
   value: {
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
 
   logout: {
     marginTop: 20,
-    backgroundColor: "#f3f4f6",
+    backgroundColor: "#fff",
     borderRadius: 12,
     padding: 16,
     alignItems: "center",
