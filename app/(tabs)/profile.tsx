@@ -3,12 +3,16 @@
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
+import { useAuth } from "@/contexts/auth-context";
+
 //back arrow function
 type ProfileProps = {
   onBack: () => void
 }
 
 export default function Profile({ onBack }: ProfileProps) {
+  const { logout } = useAuth();
+
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={onBack}>
@@ -29,7 +33,7 @@ export default function Profile({ onBack }: ProfileProps) {
         <Field label="ZIP Code" value="94027" editable />
       </View>
 
-      <TouchableOpacity style={styles.logout}>
+      <TouchableOpacity style={styles.logout} onPress={logout}>
         <Text style={styles.logoutText}>LOG OUT</Text>
       </TouchableOpacity>
     </View>
