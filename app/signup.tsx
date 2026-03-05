@@ -12,10 +12,12 @@ import {
 
 import { useAuth } from '@/contexts/auth-context';
 
-export default function LoginScreen() {
+export default function SignUpScreen() {
   const { login } = useAuth();
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -29,8 +31,20 @@ export default function LoginScreen() {
         </View>
 
         <View style={styles.card}>
-          <Text style={styles.title}>Welcome Back</Text>
-          <Text style={styles.subtitle}>Sign in to your account to continue</Text>
+          <Text style={styles.title}>Create Account</Text>
+          <Text style={styles.subtitle}>Sign up to get started</Text>
+
+          <View style={styles.fieldBlock}>
+            <Text style={styles.label}>Full Name</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Jane Doe"
+              placeholderTextColor="#9CA3AF"
+              autoCapitalize="words"
+              value={name}
+              onChangeText={setName}
+            />
+          </View>
 
           <View style={styles.fieldBlock}>
             <Text style={styles.label}>Email</Text>
@@ -50,7 +64,7 @@ export default function LoginScreen() {
             <Text style={styles.label}>Password</Text>
             <TextInput
               style={styles.input}
-              placeholder="Enter your password"
+              placeholder="Create a password"
               placeholderTextColor="#9CA3AF"
               secureTextEntry
               value={password}
@@ -58,14 +72,26 @@ export default function LoginScreen() {
             />
           </View>
 
-          <TouchableOpacity style={styles.signInButton} activeOpacity={0.9} onPress={login}>
-            <Text style={styles.signInButtonText}>Sign In</Text>
+          <View style={styles.fieldBlock}>
+            <Text style={styles.label}>Confirm Password</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Confirm your password"
+              placeholderTextColor="#9CA3AF"
+              secureTextEntry
+              value={confirmPassword}
+              onChangeText={setConfirmPassword}
+            />
+          </View>
+
+          <TouchableOpacity style={styles.signUpButton} activeOpacity={0.9} onPress={login}>
+            <Text style={styles.signUpButtonText}>Sign Up</Text>
           </TouchableOpacity>
 
           <Text style={styles.footerText}>
-            Don't have an account?{' '}
-            <Text style={styles.signUpText} onPress={() => router.push('/signup')}>
-              Sign up
+            Already have an account?{' '}
+            <Text style={styles.signInText} onPress={() => router.back()}>
+              Sign in
             </Text>
           </Text>
         </View>
@@ -137,14 +163,14 @@ const styles = StyleSheet.create({
     color: '#111827',
     backgroundColor: '#FFFFFF',
   },
-  signInButton: {
+  signUpButton: {
     backgroundColor: '#5FA920',
     borderRadius: 10,
     paddingVertical: 14,
     alignItems: 'center',
     marginTop: 10,
   },
-  signInButtonText: {
+  signUpButtonText: {
     color: '#FFFFFF',
     fontSize: 16,
     fontWeight: '600',
@@ -155,7 +181,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#4B5563',
   },
-  signUpText: {
+  signInText: {
     color: '#5FA920',
     fontWeight: '600',
   },
