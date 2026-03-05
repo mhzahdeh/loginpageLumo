@@ -1,23 +1,25 @@
-import React, { useState, useCallback } from 'react';
-import {
-  View,
-  Text,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-  Dimensions,
-} from 'react-native';
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Feather, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
+import React, { useCallback, useState } from 'react';
+import {
+  Dimensions,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, {
-  useSharedValue,
   useAnimatedStyle,
+  useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { runOnJS } from 'react-native-worklets';
+
+import Profile from './profile';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SWIPE_THRESHOLD = SCREEN_WIDTH * 0.3;
@@ -318,6 +320,10 @@ export default function HomeScreen() {
   // ── Render current screen content ──
   const renderContent = () => {
     if (screen.type === 'sub') {
+      if (screen.title === "Profile") {
+        return <Profile onBack={handleBack} />;
+      }
+
       return (
         <PlaceholderScreen
           title={screen.title}
